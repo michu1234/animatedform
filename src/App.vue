@@ -161,7 +161,7 @@ Table of contents
   body {
     max-width: 1366px;
     background-color: $main_background;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   main {
