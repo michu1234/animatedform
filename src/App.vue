@@ -1,6 +1,10 @@
 <template>
   <div id="app">
-
+<div class="background">
+  <img class="background__bloob" src="./assets/img/gredient@1X.png" alt="">
+  <img class="background__lines-top" src="./assets/img/lines.png" alt="">
+  <img class="background__lines-bottom" src="./assets/img/LINES@1X.png" alt="">
+</div>
     <main>
       <h2>Your account</h2>
       <section class="form">
@@ -31,10 +35,10 @@
               </div>
 
               <div class="input__wrapper">
-                <input id="male" name="gender" type="radio">
-                <label class="form__content-gender" for="male"></label>
-                <input id="female" name="gender" type="radio">
-                <label class="form__content-gender" for="female"></label>
+                <input id="male" name="male" type="radio">
+                <label class="form__content-gender label--male" for="male"></label>
+                <input id="female" name="male" type="radio">
+                <label class="form__content-gender label--female" for="female"></label>
               </div>
 
 
@@ -50,7 +54,11 @@
               </div>
 
 
-              <button>continue</button>
+              <div class="form__button">continue
+                <span class="form__button-hover">
+                  <img src="./assets/img/arrow.png" alt="">
+                </span>
+              </div>
             </form>
           </div>
         </div>
@@ -98,8 +106,9 @@ Table of contents
 // 5. Block + element
 // 6. Modifier
 // 7. State
-// 8. Animations
-// 9. Media Queries
+// 8. Placeholders
+// 9. Animations
+// 10. Media Queries
  
 =====================
 */
@@ -122,8 +131,7 @@ Table of contents
   $choose_input: #1cd4a3;
   $border_input: #dcdce1;
 
-  $arrow_button: #7841f4;
-  $hover_button: inear-gradient(to right, #472a85 0%, #411998 100%);
+  $arrow_button: #411a96;
   $gradient_button: linear-gradient( to right,
   #8658eb 0%,
   #652ae6 100%); // 2. Font Faces
@@ -131,33 +139,34 @@ Table of contents
     font-family: Rubik;
 
     src: url("assets/fonts/Rubik-Regular.ttf");
-  }
-
-  // 3. Base
+  } // 3. Base
   html {
     font-size: 62.5%;
   }
 
   body {
     max-width: 1366px;
-    background: $main_background;
+    background-color: $main_background;
+    overflow: hidden;
   }
 
   main {
-    display: flex;
+    @extend %flex;
+    @extend %box--center;
     flex-direction: column;
-    max-width: 778px; // margin: 0 auto;
+    max-width: 778px;
   }
 
   h2 {
     color: $header_font;
     font: 300 4.8rem $main_font_family;
+    margin: 6.7rem 12.4rem 52px auto;
   }
 
   h3 {
     max-width: 299px;
     color: $main_font;
-    font: 400 1.4rem/24px $main_font_family;
+    font: 400 1.38rem/24px $main_font_family;
     opacity: 0.9;
 
     letter-spacing: 0.28px;
@@ -166,6 +175,7 @@ Table of contents
   img {
     max-width: 100%;
     height: auto;
+    vertical-align: middle;
   }
 
   input {
@@ -183,10 +193,16 @@ Table of contents
     width: 15px;
     height: 15px;
     margin-left: 43px;
-    margin-top: 15px;
+    margin-top: 18px;
     background: transparent;
     -webkit-appearance: none;
     outline: none;
+    @extend %pointer;
+
+    &:nth-of-type(2) {
+      margin-top: 18px;
+      left: 134px;
+    }
 
     &:checked {
       border: 2px solid $choose_input;
@@ -206,6 +222,7 @@ Table of contents
     font: 400 1.6rem/28px $main_font_family;
     height: 60px;
     margin-right: 1.5rem;
+    @extend %pointer;
 
     letter-spacing: 0.32px;
     text-transform: uppercase;
@@ -215,6 +232,7 @@ Table of contents
     color: $helper_font;
     font: 400 1.1rem/28px $main_font_family;
     opacity: 0.5;
+    @extend %pointer;
   }
 
   hr {
@@ -223,13 +241,41 @@ Table of contents
     margin: 24px 1rem 24px 1rem;
     background: $border_input;
   }
+  
+   // 4. Layout
 
-  // 4. Layout
+   #app {
+  
+   }
+
   .form {
-    display: flex;
+    @extend %flex;
+  } 
+
+  .background {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+  }
+  
+  // 5. Block + element
+
+  .background__bloob {
+    will-change: auto;
+    transform: translate(-3%, -2%);
   }
 
-  // 5. Block + element
+  .background__lines-top {
+    margin-top: -480px;
+    margin-left: -500px;
+  }
+
+  .background__lines-bottom {
+    position: absolute;
+    right: -20%;
+    bottom: -40%;
+  }
+
   .form__decoration {
     width: 308px;
     height: 552px;
@@ -246,18 +292,23 @@ Table of contents
   }
 
   .form__content {
-    display: flex;
+    @extend %flex;
     flex-direction: column;
     max-width: 470px;
     background: $content_background;
+    position: relative;
   }
 
   .form__container {
     padding: 0 5rem 0 5rem;
   }
 
+  input[name=female]{
+    margin-right: 3rem;
+  }
+
   .input__wrapper {
-    display: flex;
+    @extend %flex;
     justify-content: space-between;
   }
 
@@ -268,7 +319,35 @@ Table of contents
     border: 2px solid $border_input;
   }
 
+  .form__button {
+    position: absolute;
+    right: -50px;
+    bottom: -25px;
+    width: 237px;
+    height: 50px;
+    background: $gradient_button;
+    color: #ffffff;
+    font: 300 1.2rem/50px $main_font_family;
+    text-transform: uppercase;
+    @extend %pointer;
+    @extend %text--center;
+
+    &-hover {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      right: 0;
+      position: absolute;
+      transition: all .3s;
+      &:hover {
+        background-color: $arrow_button;
+        transition: all .3s;
+      }
+    }
+  } 
+  
   // 6. Modifier
+
   .normal--input {
     height: 50px;
     border: 2px solid $border_input;
@@ -286,5 +365,33 @@ Table of contents
     margin-bottom: 25px;
     outline: none;
   }
+
+  .label--female {
+    margin-right: auto;
+     background: url(assets/img/female.png) no-repeat center center;
+  }
+
+  .label--male {
+    margin-right: 3rem;
+    background: url(assets/img/male.png) no-repeat center center;
+  }
+  
+// 8. Placeholders
+
+%text--center {
+  text-align: center;
+}
+
+%box--center {
+  margin: 0 auto;
+}
+
+%flex {
+  display: flex;
+}
+
+%pointer {
+  cursor: pointer;
+}
 
 </style>
