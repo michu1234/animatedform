@@ -19,7 +19,7 @@
 
             <form action="">
               <label for="">Your name *Field required</label>
-              <input class="line--input" type="text">
+              <input v-model="name" class="line--input" type="text">
 
               <div class="input__wrapper">
 
@@ -30,14 +30,14 @@
                 </label>
 
                 <label for="">
-                  <input class="line--input" type="number">
+                  <input v-model="phoneNumber" class="line--input" type="number">
                 </label>
               </div>
 
               <div class="input__wrapper">
-                <input id="male" name="male" type="radio">
+                <input id="male" v-model="gender" value="male" name="male" type="radio">
                 <label class="form__content-gender label--male" for="male"></label>
-                <input id="female" name="male" type="radio">
+                <input id="female" v-model="gender" value="female" name="male" type="radio">
                 <label class="form__content-gender label--female" for="female"></label>
               </div>
 
@@ -46,11 +46,11 @@
 
               <label for="">Date of Birth</label>
               <div class="input__wrapper">
-                <input placeholder="01" class="normal--input narrow--input" type="number">
+                <input placeholder="01" v-model="day" class="normal--input narrow--input" type="number">
                 <hr>
-                <input placeholder="January" class="normal--input" type="text">
+                <input placeholder="January" v-model="month" class="normal--input" type="text">
                 <hr>
-                <input placeholder="1990" class="normal--input" type="number">
+                <input placeholder="1990" v-model="year" class="normal--input" type="number">
               </div>
 
 
@@ -75,6 +75,12 @@
     data() {
       return {
         phone: "",
+        phoneNumber: "",
+        name: "",
+        gender: "",
+        day: "",
+        month: "",
+        year: "",
         prefixes: [],
       };
     },
@@ -169,6 +175,7 @@ Table of contents
     @extend %box--center;
     flex-direction: column;
     max-width: 778px;
+    height: auto;
   }
 
   h2 {
