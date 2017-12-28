@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-<div class="background">
-  <img class="background__bloob" src="./assets/img/gredient@1X.png" alt="">
-  <img class="background__lines-top" src="./assets/img/lines.png" alt="">
-  <img class="background__lines-bottom" src="./assets/img/LINES@1X.png" alt="">
-</div>
+    <div class="background">
+      <img class="background__bloob" src="./assets/img/gredient@1X.png" alt="">
+      <img class="background__lines-top" src="./assets/img/lines.png" alt="">
+      <img class="background__lines-bottom" src="./assets/img/LINES@1X.png" alt="">
+    </div>
     <main>
       <h2>Your account</h2>
       <section class="form">
@@ -18,19 +18,23 @@
             <h3>Take it all with you. Switch between devices, and pick up.</h3>
 
             <form action="">
-              <label for="">Your name *Field required</label>
-              <input v-model="name" class="line--input" type="text">
+              <label for="">Your name
+                <span :class="[errorName ? 'el--display' : 'el--hide' ]">*Field required</span>
+              </label>
+              <input @blur="!name ? errorName = true : errorName = false" @focus="resetError" v-model="name" :class="[errorName ? 'input--error' : 'line--input' ]"
+                type="text" autofocus>
 
               <div class="input__wrapper">
 
-                <label for="">
+                <label for="">Mobile
                   <select class="line--input" v-model="phone" name="" id="">
                     <option v-for="(prefix, index) in prefixes" :key="index" value="">{{prefix}}</option>
                   </select>
                 </label>
 
                 <label for="">
-                  <input v-model="phoneNumber" class="line--input" type="number">
+                  <span :class="[errorPhone ? 'el--display' : 'el--hide' ]">*6 digit number required</span>
+                  <input @blur="validateIt" :class="[errorPhone ? 'input--error' : 'line--input' ]" v-model="phoneNumber" type="number">
                 </label>
               </div>
 
@@ -74,6 +78,8 @@
     name: "app",
     data() {
       return {
+        errorName: false,
+        errorPhone: false,
         phone: "",
         phoneNumber: "",
         name: "",
@@ -90,12 +96,19 @@
           return data.json();
         })
         .then(entry => {
-          console.log(entry);
           for (let i = 0; i < entry.length; i++) {
-            // console.log(`${entry[i].dial_code} (${entry[i].code})`);
             this.prefixes.push(`${entry[i].dial_code} (${entry[i].code})`);
           }
         });
+    },
+    methods: {
+      validateIt() {
+        let inputLength = this.phoneNumber.length;
+        inputLength < 6 ? this.errorPhone = true : this.errorPhone = false;
+      },
+      resetError() {
+        this.errorName = false;
+      }
     }
   };
 
@@ -106,15 +119,18 @@
 Table of contents
 =====================
 // 1. Variables
-// 2. Font Faces
-// 3. Base
-// 4. Layout
-// 5. Block + element
-// 6. Modifier
-// 7. State
-// 8. Placeholders
-// 9. Animations
-// 10. Media Queries
+// 2. Placeholders
+// 3. Functions
+// 4. Font Faces
+// 5. Base
+// 6. Layout
+// 7. Block + element
+// 8. Modifier
+// 9. State
+// 10. Animations
+// 11. Media Queries
+
+
  
 =====================
 */
@@ -131,34 +147,63 @@ Table of contents
   sans-serif;
   $header_font: #fff;
   $main_font: #202020;
-  $helper_font: #dfdfe4;
+  $helper_font: #a2a2af;
   $error_font: #f3afb0;
 
   $error_input: #ea3030;
   $choose_input: #1cd4a3;
   $border_input: #dcdce1;
+  $radio_background: #ECEDF2;
 
   $arrow_button: #411a96;
   $gradient_button: linear-gradient( to right,
   #8658eb 0%,
-  #652ae6 100%); 
+  #652ae6 100%);
   
   
-  // 2. Font Faces
+  // 2. Placeholders
 
+  %text--center {
+    text-align: center;
+  }
+
+  %box--center {
+    margin: 0 auto;
+  }
+
+  %flex {
+    display: flex;
+  }
+
+  %pointer {
+    cursor: pointer;
+  }
+
+  %transition {
+    transition: all .3s;
+  }
+
+  // 3. Functions
+
+  @function prc($el,
+  $target) {
+    @return (100% * $el) / $target;
+  } 
+  
+ // 4. Font Faces
 
   @font-face {
     font-family: Rubik;
-
     src: url("assets/fonts/Rubik-Regular.ttf");
   } 
   
-  // 3. Base
+  
+  // 5. Base
 
-* {
-  box-sizing: border-box;
-  outline: none;
-}
+  * {
+    box-sizing: border-box;
+    outline: none;
+  }
 
   html {
     font-size: 62.5%;
@@ -181,7 +226,7 @@ Table of contents
   h2 {
     color: $header_font;
     font: 300 4.8rem $main_font_family;
-    margin: 6.7rem 12.4rem 52px auto;
+    margin: 6.7rem prc(124, 1366) 52px auto;
     z-index: 1;
   }
 
@@ -202,7 +247,7 @@ Table of contents
 
   input {
     width: 100%;
-    background-color: $header_font;
+    background-color: transparent;
     color: $main_font;
     font: 400 1.6rem/28px $main_font_family;
     padding-left: 1.5rem;
@@ -216,7 +261,7 @@ Table of contents
     height: 15px;
     margin-left: 40px;
     margin-top: 18px;
-    background: transparent;
+    background-color: $radio_background;
     -webkit-appearance: none;
     outline: none;
     z-index: 1;
@@ -229,7 +274,7 @@ Table of contents
 
     &:checked {
       border: 2px solid $choose_input;
-      background: transparent url("assets/img/fill@1X.png") no-repeat center center;
+      background: $radio_background url("assets/img/fill@1X.png") no-repeat center center;
 
       &+label {
         border: 2px solid $choose_input;
@@ -264,25 +309,24 @@ Table of contents
     height: 2px;
     margin: 24px 1rem 24px 1rem;
     background: $border_input;
-  }
+  } 
   
-   // 4. Layout
+  // 6. Layout
 
-   #app {
-  
-   }
+  #app {}
 
   .form {
     @extend %flex;
-  } 
+  }
 
   .background {
     position: absolute;
     width: 100%;
     height: 100vh;
-  }
+  } 
   
-  // 5. Block + element
+  
+  // 7. Block + element
 
   .background__bloob {
     will-change: auto;
@@ -301,24 +345,15 @@ Table of contents
   }
 
   .form__decoration {
-    width: 308px;
-    height: 552px;
-    background: url("assets/img/layer1.png") no-repeat top left;
-    position: relative;
-
-    &-img {
-      position: absolute;
-      z-index: 1;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
+    display: none;
   }
 
   .form__content {
     @extend %flex;
+    @extend %box--center;
     flex-direction: column;
     max-width: 470px;
+    height: 552px;
     background: $content_background;
     position: relative;
   }
@@ -327,7 +362,7 @@ Table of contents
     padding: 0 5rem 0 5rem;
   }
 
-  input[name=female]{
+  input[name=female] {
     margin-right: 3rem;
   }
 
@@ -362,15 +397,15 @@ Table of contents
       height: 50px;
       right: 0;
       position: absolute;
-      transition: all .3s;
+      @extend %transition;
       &:hover {
         background-color: $arrow_button;
-        transition: all .3s;
+        @extend %transition;
       }
     }
   } 
   
-  // 6. Modifier
+  // 8. Modifier
 
   .normal--input {
     height: 50px;
@@ -392,34 +427,68 @@ Table of contents
 
   .label--female {
     margin-right: auto;
-     background: url(assets/img/female.png) no-repeat center center;
+    background: url(assets/img/female.png) no-repeat center center;
   }
 
   .label--male {
     margin-right: 3rem;
     background: url(assets/img/male.png) no-repeat center center;
   }
-  
-// 8. Placeholders
 
-%text--center {
-  text-align: center;
-}
+  .input--error {
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid $error_input;
+    padding: 1.5rem;
+    margin-bottom: 25px;
+    outline: none;
+  }
 
-%box--center {
-  margin: 0 auto;
-}
+  .el--display {
+    visibility: visible;
+    color: $error_input;
+    text-align: right;
+    display: block;
+    width: 100%;
+  }
 
-%flex {
-  display: flex;
-}
+  .el--hide {
+    visibility: hidden;
+  }
 
-%pointer {
-  cursor: pointer;
-}
+// 9. State
+// 10. Animations
 
-%transition {
-  transition: all .3s;
-}
+  // 11. Media Queries 
+
+  @media screen and (min-width: 680px) {
+    .form__decoration {
+      display: block;
+      width: 308px;
+      height: 552px;
+      position: relative;
+      background-color: $main_background;
+
+      &:after {
+        content: "";
+        display: block;
+        background: url("assets/img/layer1.png") no-repeat top left;
+        opacity: 0.1;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        position: absolute;
+      }
+
+      &-img {
+        position: absolute;
+        z-index: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
 
 </style>
