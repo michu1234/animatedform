@@ -114,6 +114,7 @@ Table of contents
 */
 
   // 1. Variables
+
   $main_background: #242424;
   $content_background: linear-gradient( -5deg,
   rgba(165, 165, 180, 1) 0%,
@@ -134,12 +135,25 @@ Table of contents
   $arrow_button: #411a96;
   $gradient_button: linear-gradient( to right,
   #8658eb 0%,
-  #652ae6 100%); // 2. Font Faces
+  #652ae6 100%); 
+  
+  
+  // 2. Font Faces
+
+
   @font-face {
     font-family: Rubik;
 
     src: url("assets/fonts/Rubik-Regular.ttf");
-  } // 3. Base
+  } 
+  
+  // 3. Base
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
   html {
     font-size: 62.5%;
   }
@@ -161,6 +175,7 @@ Table of contents
     color: $header_font;
     font: 300 4.8rem $main_font_family;
     margin: 6.7rem 12.4rem 52px auto;
+    z-index: 1;
   }
 
   h3 {
@@ -192,16 +207,17 @@ Table of contents
     border: 2px solid $border-input;
     width: 15px;
     height: 15px;
-    margin-left: 43px;
+    margin-left: 40px;
     margin-top: 18px;
     background: transparent;
     -webkit-appearance: none;
     outline: none;
+    z-index: 1;
     @extend %pointer;
 
     &:nth-of-type(2) {
       margin-top: 18px;
-      left: 134px;
+      left: 130px;
     }
 
     &:checked {
@@ -210,6 +226,7 @@ Table of contents
 
       &+label {
         border: 2px solid $choose_input;
+        @extend %transition;
       }
     }
   }
@@ -392,6 +409,10 @@ Table of contents
 
 %pointer {
   cursor: pointer;
+}
+
+%transition {
+  transition: all .3s;
 }
 
 </style>
