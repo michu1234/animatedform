@@ -10,7 +10,7 @@
   <main>
     <h2>Your account</h2>
     <section class="form">
- 
+
       <div class="form__decoration">
         <img class="form__decoration-img" src="./assets/img/lines_decor.png" alt="">
       </div>
@@ -21,8 +21,8 @@
 
           <form action="">
 
-            <label for="">Your name
-              <span :class="[errorName ? 'el--display' : 'el--hide' ]"> *Field required</span>
+            <label class="form__name" for=""><span>Your name</span>
+              <span :class="[errorName ? 'el--display' : 'el--hide', 'el--alert' ]"> *Field required</span>
             </label>
 
             <input @blur="!name ? errorName = true : errorName = false" @focus="resetError" v-model="name" :class="[errorName ? 'input--error' : 'line--input' ]" type="text" autofocus>
@@ -35,12 +35,12 @@
                   </select>
                 </label>
 
-              <label for="">
-                  <span :class="[errorPhone ? 'el--display' : 'el--hide' ]">*6 digit number required</span>
-                  <input @blur="validateIt" :class="[errorPhone ? 'input--error' : 'line--input' ]" v-model="phoneNumber" type="number">
+              <label class="form__number" for="">
+                  <span :class="[errorPhone ? 'el--display' : 'el--hide',]">*6 digit number required</span>
+                  <input @blur="validateIt" :class="[errorPhone ? 'input--error' : 'line--input']" v-model="phoneNumber" type="number">
                 </label>
             </div>
-
+              <label for="">Gender</label>
             <div class="input__wrapper">
               <input id="male" v-model="gender" value="male" name="male" type="radio">
               <label class="form__content-gender label--male" for="male"></label>
@@ -129,12 +129,8 @@ Table of contents
 // 9. State
 // 10. Animations
 // 11. Media Queries
-
-
-
 =====================
 */
-
 // 1. Variables
 $main_background: #242424;
 $content_background: linear-gradient(-5deg, rgba(165, 165, 180, 1) 0%, rgba(228, 235, 239, 1) 5%, rgba(231, 232, 238, 1) 10%, rgba(249, 249, 251, 1) 100%);
@@ -143,61 +139,55 @@ $header_font: #fff;
 $main_font: #202020;
 $helper_font: #a2a2af;
 $error_font: #f3afb0;
-
 $error_input: #ea3030;
 $choose_input: #1cd4a3;
 $border_input: #dcdce1;
 $radio_background: #ecedf2;
-
 $arrow_button: #411a96;
 $gradient_button: linear-gradient(to right, #8658eb 0%, #652ae6 100%); // 2. Placeholders
 %text--center {
     text-align: center;
 }
-
 %box--center {
     margin: 0 auto;
 }
-
 %flex {
     display: flex;
 }
-
 %pointer {
     cursor: pointer;
 }
-
 %transition {
     transition: all 0.3s;
 }
-
 // 3. Functions
-
 @function prc($el, $target) {
     @return (100% * $el) / $target;
 }
-
 // 4. Font Faces
-
-@font-face {
-    font-family: Rubik;
-    src: url("assets/fonts/Rubik-Regular.ttf");
-}
+// @font-face {
+//     font-family: Rubik;
+//     src: url("assets/fonts/Rubik-Regular.ttf");
+// }
 // 5. Base
-
 * {
     box-sizing: border-box;
     outline: none;
 }
-
 html {
     font-size: 62.5%;
 }
-
 body {
     max-width: 1366px;
     background-color: $main_background;
     overflow-x: hidden;
+    margin: 0;
+}
+
+#app {
+  overflow:hidden;
+  position: relative;
+  min-height: 800px;
 }
 
 main {
@@ -207,29 +197,25 @@ main {
     max-width: 778px;
     height: auto;
 }
-
 h2 {
     color: $header_font;
     font: 300 4.8rem $main_font_family;
     @extend %box--center;
     z-index: 1;
+    margin: 50px prc(124, 1366) 52px auto;
 }
-
 h3 {
     max-width: 299px;
     color: $main_font;
     font: 400 1.38rem/24px $main_font_family;
-    opacity: 0.9;
-
     letter-spacing: 0.28px;
+    margin: 0 0 25px 0;
 }
-
 img {
     max-width: 100%;
     height: auto;
     vertical-align: middle;
 }
-
 input {
     width: 100%;
     background-color: transparent;
@@ -237,7 +223,6 @@ input {
     font: 400 1.6rem/28px $main_font_family;
     padding-left: 1.5rem;
 }
-
 input[type="radio"] {
     // display: none;
     position: absolute;
@@ -251,92 +236,78 @@ input[type="radio"] {
     outline: none;
     z-index: 1;
     @extend %pointer;
-
     &:nth-of-type(2) {
         margin-top: 18px;
-        left: 130px;
+        transform: translateX(80px);
     }
-
     &:checked {
         border: 2px solid $choose_input;
         background: $radio_background url("assets/img/fill@1X.png") no-repeat center center;
-
         & + label {
             border: 2px solid $choose_input;
             @extend %transition;
         }
     }
 }
-
 select {
     border: none;
     outline: none;
     background: transparent url("assets/img/dropdownarrow@1X.png") no-repeat center center;
     color: $main_font;
     font: 400 1.6rem/28px $main_font_family;
-    height: 60px;
+    height: 40px;
     margin-right: 1.5rem;
     @extend %pointer;
-
     letter-spacing: 0.32px;
     text-transform: uppercase;
 }
-
 label {
     color: $helper_font;
     font: 400 1.1rem/28px $main_font_family;
-    opacity: 0.5;
     @extend %pointer;
+    &:nth-of-type(3){
+      display: block;
+      padding: 10px 0 0 0;
+    }
 }
-
 hr {
     width: 4rem;
     height: 2px;
     margin: 24px 1rem;
     background: $border_input;
 }
-
 // 6. Layout
-
 #app {}
-
 .form {
     @extend %flex;
+    margin: 0 6% 0 6%;
 }
-
 .background {
     position: absolute;
     width: 100%;
     height: 100vh;
-    animation: bloob 26s ease-out forwards;
+    animation: bloob 15s ease-out forwards;
 }
-
 // 7. Block + element
-
 .background__bloob {
     will-change: auto;
-
     // animation: bloob 16s forwards;
 }
-
 .background__lines-top {
     transform: translate(-69%, -2%);
     position: absolute;
     z-index: -1;
 }
-
 .background-bottom__lines {
     position: absolute;
     right: -20%;
     bottom: -40%;
     animation: bloob_lines 5s forwards;
 }
-
 .form__decoration {
     display: none;
     animation: decor_animation 3s forwards;
 }
-
 .form__content {
     @extend %flex;
     @extend %box--center;
@@ -345,19 +316,26 @@ hr {
     height: 552px;
     background: $content_background;
     position: relative;
+    padding-top: 40px;
 }
-
 .form__container {
-    padding: 0 4%;
+    padding: 0 2%;
 }
-
 input[name="female"] {
-    margin-right: 3rem;
+    margin-right: 2rem;
 }
-
 .input__wrapper {
     @extend %flex;
     justify-content: space-between;
+    margin-top: 10px;
+}
+
+.form__name {
+  display: flex;
+}
+
+.form__number {
+  text-align: right;
 }
 
 .form__content-gender {
@@ -366,7 +344,6 @@ input[name="female"] {
     height: 50px;
     border: 2px solid $border_input;
 }
-
 .form__button {
     position: absolute;
     right: 50%;
@@ -380,7 +357,6 @@ input[name="female"] {
     text-transform: uppercase;
     @extend %pointer;
     @extend %text--center;
-
     &-hover {
         display: inline-block;
         width: 50px;
@@ -394,32 +370,26 @@ input[name="female"] {
         }
     }
 }
-
 // 8. Modifier
-
 .normal--input {
     height: 50px;
     border: 2px solid $border_input;
 }
-
 .narrow--input {
     max-width: 5rem;
 }
-
 .line--input {
     border: none;
     background: transparent;
     border-bottom: 2px solid $border-input;
-    padding: 1.5rem;
-    margin-bottom: 25px;
+    padding: .45rem;
+    margin-bottom: 15px;
     outline: none;
 }
-
 .label--female {
     margin-right: auto;
     background: url("assets/img/female.png") no-repeat center center;
 }
-
 .label--male {
     margin-right: 3rem;
     background: url("assets/img/male.png") no-repeat center center;
@@ -429,47 +399,45 @@ input[name="female"] {
     border: none;
     background: transparent;
     border-bottom: 2px solid $error_input;
-    padding: 1.5rem;
-    margin-bottom: 25px;
+    margin-bottom: 15px;
+    padding: .45rem;
     outline: none;
 }
-
 // 9. State
-
 .el--display {
     visibility: visible;
     color: $error_input;
     text-align: right;
     display: inline-block;
-    width: 100%;
 }
-
 .el--hide {
     visibility: hidden;
 }
 
-// 10. Animations
+.el--alert {
+  margin-left: auto;
+  text-align: right;
+}
 
+// 10. Animations
 @keyframes bloob {
     0% {
-        transform: translate(-3%, -2%) scale(0.7);
+        transform: translate(-3%, -2%) scale(1);
         transform-origin: 0 0;
     }
     100% {
-        transform: translate(-3%, -2%) scale(1.16);
+        transform: translate(-3%, -2%) scale(1.1);
         transform-origin: 0 0;
     }
 }
-
 @keyframes bloob_lines {
     0% {
         transform: translate(0, 1000px);
     }
     100% {
-        transform: translate(0, 100px);
+        transform: translate(0, 0);
     }
 }
-
 @keyframes decor_animation {
     0% {
         width: 0;
@@ -480,7 +448,6 @@ input[name="female"] {
         margin-left: 0;
     }
 }
-
 @keyframes decor_lines {
     0% {
         display: none;
@@ -492,15 +459,12 @@ input[name="female"] {
         width: 100%;
     }
 }
-
 // 11. Media Queries
-
 @media screen and (min-width: 500px) {
     .form__container {
-        padding: 0 5rem;
+        padding: 0 4rem;
     }
 }
-
 @media screen and (min-width: 680px) {
     .form__decoration {
         display: block;
@@ -508,7 +472,6 @@ input[name="female"] {
         height: 552px;
         position: relative;
         background-color: $main_background;
-
         &:after {
             content: "";
             display: block;
@@ -520,7 +483,6 @@ input[name="female"] {
             right: 0;
             position: absolute;
         }
-
         &-img {
             position: absolute;
             z-index: 1;
@@ -535,8 +497,8 @@ input[name="female"] {
         right: -50px;
         transform: translate(0);
     }
-    h2 {
-        margin: 67px prc(124, 1366) 52px auto;
-    }
+    // h2 {
+    //     margin: 67px prc(124, 1366) 52px auto;
+    // }
 }
 </style>

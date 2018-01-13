@@ -18,10 +18,6 @@ module.exports = {
         ],
       },
       {
-        test: /\.(woff|woff2|eot|ttf|svg)(\?.*$|$)/,
-        loader: 'url-loader?importLoaders=1&limit=100000'
-      },
-      {
         test: /\.scss$/,
         use: [
           'vue-style-loader',

@@ -1,8 +1,8 @@
 {
-  "name": "test_task",
-  "description": "animated 10clouds form",
+  "name": "10clouds",
+  "description": "Test task for 10clouds",
   "version": "1.0.0",
-  "author": "michu1234 <moooderator@gmail.com>",
+  "author": "Dawid Nawrocki",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -11,8 +11,7 @@
   },
   "dependencies": {
     "vue": "^2.5.11",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "webpack-dev-server": "^2.9.1"
   },
   "browserslist": [
     "> 1%",
@@ -31,7 +30,6 @@
     "sass-loader": "^6.0.6",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack": "^3.6.0"
   }
 }
